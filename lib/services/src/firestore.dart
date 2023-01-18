@@ -24,7 +24,6 @@ class FirestoreService {
   }) async {
     final path = ApiPath.userTokens(userId);
     final DocumentReference doc = _firebaseFirestore.collection(path).doc(token);
-
     doc.set(
       {
         'token': token,

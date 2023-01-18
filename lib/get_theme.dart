@@ -36,11 +36,16 @@ ThemeData getTheme() {
       color: Colors.white,
       elevation: 0.0,
       centerTitle: true,
-      textTheme: TextTheme(
+      toolbarTextStyle: TextTheme(
         headline6: TextStyle(
           color: Colors.brown,
         ),
-      ),
+      ).bodyText2,
+      titleTextStyle: TextTheme(
+        headline6: TextStyle(
+          color: Colors.brown,
+        ),
+      ).headline6,
     ),
   );
 }

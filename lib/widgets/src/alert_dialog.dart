@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wiredbrain/coffee_router.dart';
+
+import '../../coffee_router.dart';
 
 Future<void> showAlertDialog(String message, [String? title]) async {
   return showDialog<void>(

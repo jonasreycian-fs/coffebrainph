@@ -1,8 +1,8 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:wiredbrain/widgets/src/cart_badge.dart';
 
 import '../services/services.dart';
+import '../widgets/src/cart_badge.dart';
 import 'cart.dart';
 import 'menu_list.dart';
 import 'orders.dart';
@@ -62,7 +62,7 @@ class _MenuScreenState extends State<MenuScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Welcome to the WiredBrain"),
+        title: Text('Welcome to the WiredBrain'),
         centerTitle: false,
         actions: [
           CartBadge(
@@ -85,22 +85,10 @@ class _MenuScreenState extends State<MenuScreen> {
         type: BottomNavigationBarType.fixed,
         unselectedItemColor: Colors.brown.shade300,
         items: <BottomNavigationBarItem>[
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Menu",
-          ),
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: "Cart",
-          ),
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: "Orders",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: "Profile",
-          ),
+          const BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Menu'),
+          const BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
+          const BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Orders'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.brown.shade800,
@@ -110,10 +98,17 @@ class _MenuScreenState extends State<MenuScreen> {
   }
 
   Future<void> setupMessaging() async {
-    await _messagingService.initialize();
-    await _firestoreService.registerUserToken(
-      token: _messagingService.userDeviceToken,
-      userId: _authService.currentUser!.uid,
+    Future.delayed(
+      const Duration(seconds: 2),
+      () async {
+        await _messagingService.initialize();
+        if (_messagingService.userDeviceToken != null) {
+          await _firestoreService.registerUserToken(
+            token: _messagingService.userDeviceToken,
+            userId: _authService.currentUser!.uid,
+          );
+        }
+      },
     );
   }
 }

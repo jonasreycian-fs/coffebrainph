@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:math';
+
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:wiredbrain/widgets/widgets.dart';
+
+import '../../widgets/widgets.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -29,6 +31,7 @@ class AuthService {
     } catch (e) {
       showAlertDialog(e.toString());
     }
+    return null;
   }
 
   Future<User?> signInWithEmailAndPassword({
@@ -36,8 +39,7 @@ class AuthService {
     required String password,
   }) async {
     try {
-      final UserCredential userCredential =
-          await _firebaseAuth.signInWithCredential(
+      final UserCredential userCredential = await _firebaseAuth.signInWithCredential(
         EmailAuthProvider.credential(email: email, password: password),
       );
       return userCredential.user;
@@ -52,6 +54,7 @@ class AuthService {
     } catch (e) {
       showAlertDialog(e.toString());
     }
+    return null;
   }
 
   Future<void> sendPasswordResetEmail({
@@ -64,20 +67,18 @@ class AuthService {
     await currentUser?.delete();
   }
 
-  Future<void>? updatePassword({
+  Future<void> updatePassword({
     required String newPassword,
-  }) {
-    currentUser?.updatePassword(newPassword);
+  }) async {
+    await currentUser?.updatePassword(newPassword);
   }
 
-  Future<void>? updateProfile({
+  Future<void> updateProfile({
     required String photoURL,
     required String displayName,
-  }) {
-    currentUser?.updateProfile(
-      photoURL: photoURL,
-      displayName: displayName,
-    );
+  }) async {
+    await currentUser?.updateDisplayName(displayName);
+    await currentUser?.updatePhotoURL(photoURL);
   }
 
   Future<User?> createUserWithEmailAndPassword({
@@ -101,17 +102,18 @@ class AuthService {
     } catch (e) {
       showAlertDialog(e.toString());
     }
+    return null;
   }
 
   Future<String?> signInWithPhoneNumber(String phone) async {
     try {
-      final ConfirmationResult confirmationResult =
-          await _firebaseAuth.signInWithPhoneNumber(phone);
+      final ConfirmationResult confirmationResult = await _firebaseAuth.signInWithPhoneNumber(phone);
 
       return confirmationResult.verificationId;
     } catch (e) {
       showAlertDialog(e.toString());
     }
+    return null;
   }
 
   Future<User?> signInWithGoogle() async {
@@ -139,6 +141,7 @@ class AuthService {
     } catch (e) {
       showAlertDialog(e.toString());
     }
+    return null;
   }
 
   Future<bool> isAppleSignInAvailable() {
@@ -148,11 +151,9 @@ class AuthService {
   /// Generates a cryptographically secure random nonce, to be included in a
   /// credential request.
   String generateNonce([int length = 32]) {
-    final charset =
-        '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
+    final charset = '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
     final random = Random.secure();
-    return List.generate(length, (_) => charset[random.nextInt(charset.length)])
-        .join();
+    return List.generate(length, (_) => charset[random.nextInt(charset.length)]).join();
   }
 
   /// Returns the sha256 hash of [input] in hex notation.
@@ -187,15 +188,14 @@ class AuthService {
       );
 
       // Create an `OAuthCredential` from the credential returned by Apple.
-      final oauthCredential = OAuthProvider("apple.com").credential(
+      final oauthCredential = OAuthProvider('apple.com').credential(
         idToken: appleCredential.identityToken,
         rawNonce: rawNonce,
       );
 
       // Sign in the user with Firebase. If the nonce we generated earlier does
       // not match the nonce in `appleCredential.identityToken`, sign in will fail.
-      final userCredential =
-          await _firebaseAuth.signInWithCredential(oauthCredential);
+      final userCredential = await _firebaseAuth.signInWithCredential(oauthCredential);
 
       return userCredential.user;
       //
@@ -208,6 +208,7 @@ class AuthService {
     } catch (e) {
       showAlertDialog(e.toString());
     }
+    return null;
   }
 
   Future<void> signOut() async {

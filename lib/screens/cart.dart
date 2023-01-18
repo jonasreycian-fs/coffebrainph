@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:wiredbrain/coffee_router.dart';
-import 'package:wiredbrain/models/models.dart';
-import 'package:wiredbrain/screens/menu.dart';
-import 'package:wiredbrain/services/services.dart';
-import 'package:wiredbrain/widgets/widgets.dart';
+
+import '../coffee_router.dart';
+import '../models/models.dart';
+import '../services/services.dart';
+import '../services/src/in_app_messaging.dart';
+import '../widgets/widgets.dart';
+import 'menu.dart';
 
 class CartScreen extends StatelessWidget {
   static String routeName = 'Shops';
@@ -12,6 +14,7 @@ class CartScreen extends StatelessWidget {
   final FirestoreService _firestoreService = FirestoreService.instance;
   final AuthService _authService = AuthService.instance;
   final AnalyticsService _analyticsService = AnalyticsService.instance;
+  final InAppMessagingService _fipm = InAppMessagingService.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +24,10 @@ class CartScreen extends StatelessWidget {
       stream: _firestoreService.getUserCart(userId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
+          if (snapshot.hasError) {
+            return NoItems();
+          }
+
           if (snapshot.hasData) {
             final List<CartItem> items = snapshot.data ?? [];
 
@@ -28,9 +35,7 @@ class CartScreen extends StatelessWidget {
               return NoItems();
             }
 
-            final num cartTotal = items
-                .map((item) => item.total)
-                .reduce((value, element) => value + element);
+            final num cartTotal = items.map((item) => item.total).reduce((value, element) => value + element);
 
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -51,6 +56,13 @@ class CartScreen extends StatelessWidget {
                           key: Key(item.id ?? '$index'),
                           background: Container(color: Colors.red[700]),
                           onDismissed: (direction) {
+                            if (items.length == 1) {
+                              _fipm.triggerEvent('remove_and_empty_basket');
+                            }
+                            // _analyticsService.logRemoveItem(
+                            //   itemId: item.coffee.id,
+                            //   itemName: item.coffee.name,
+                            // );
                             _firestoreService.deleteUserCartItem(
                               userId: userId,
                               cartId: item.id!,
@@ -85,8 +97,7 @@ class CartScreen extends StatelessWidget {
                     text: 'Send Order',
                     highlighColor: true,
                     onPressed: () async {
-                      final String orderId =
-                          await _firestoreService.submitOrder(userId, items);
+                      final String orderId = await _firestoreService.submitOrder(userId, items);
 
                       await _analyticsService.logPlaceOrder(
                         orderId: orderId,

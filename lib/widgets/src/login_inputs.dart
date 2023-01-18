@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD:lib/widgets/login_inputs.dart
 
-import '../constants.dart';
-import '../helpers/validators.dart';
-=======
-import 'package:wiredbrain/constants.dart';
-import 'package:wiredbrain/helpers/helpers.dart';
->>>>>>> origin/module04-database-management:lib/widgets/src/login_inputs.dart
+import '../../constants.dart';
+import '../../helpers/helpers.dart';
 
 class LoginInputs extends StatelessWidget {
   const LoginInputs({

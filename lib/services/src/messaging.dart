@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:wiredbrain/widgets/widgets.dart';
+
+import '../../widgets/widgets.dart';
 
 class MessagingService {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
@@ -10,11 +11,6 @@ class MessagingService {
   factory MessagingService() => _service;
 
   static MessagingService get instance => _service;
-
-  Future<bool> isPremissionEnabled(AuthorizationStatus status) async {
-    final settings = await _firebaseMessaging.getNotificationSettings();
-    return settings.authorizationStatus == status;
-  }
 
   Future<void> initialize() async {
     final NotificationSettings settings = await _requestPermission();
@@ -29,13 +25,17 @@ class MessagingService {
     return _firebaseMessaging.subscribeToTopic(topic);
   }
 
-  Future<void> unsubscribeToTopic(String topic) {
+  Future<void> unsubscribeFromTopic(String topic) {
     return _firebaseMessaging.unsubscribeFromTopic(topic);
   }
 
+  Future<bool> isPremissionEnabled(AuthorizationStatus status) async {
+    final settings = await _firebaseMessaging.getNotificationSettings();
+    return settings.authorizationStatus == status;
+  }
+
   Future<NotificationSettings> _requestPermission() async {
-    final NotificationSettings settings =
-        await _firebaseMessaging.requestPermission(
+    final NotificationSettings settings = await _firebaseMessaging.requestPermission(
       alert: true,
       badge: true,
       sound: true,

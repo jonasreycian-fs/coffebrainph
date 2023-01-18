@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:wiredbrain/screens/coffee_item.dart';
-import 'package:wiredbrain/services/services.dart';
 
 import '../models/models.dart';
+import '../services/services.dart';
+import 'coffee_item.dart';
 
 class MenuList extends StatefulWidget {
   static String routeName = 'MenuList';

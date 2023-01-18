@@ -1,14 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:wiredbrain/coffee_router.dart';
-import 'package:wiredbrain/constants.dart';
-import 'package:wiredbrain/enums/enums.dart';
-import 'package:wiredbrain/screens/forgot_password.dart';
-import 'package:wiredbrain/screens/menu.dart';
-import 'package:wiredbrain/services/services.dart';
-import 'package:wiredbrain/widgets/widgets.dart';
+
+import '../coffee_router.dart';
+import '../constants.dart';
+import '../enums/enums.dart';
+import '../services/services.dart';
+import '../widgets/widgets.dart';
+import 'forgot_password.dart';
+import 'menu.dart';
 
 class LoginEmailScreen extends StatefulWidget {
   static String routeName = 'loginEmailScreen';
@@ -36,10 +36,10 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text("Login"),
+        title: Text('Login'),
         actions: [
           Image.asset(
-            "assets/logo.png",
+            'assets/logo.png',
             semanticLabel: 'logo',
             fit: BoxFit.fitWidth,
           ),

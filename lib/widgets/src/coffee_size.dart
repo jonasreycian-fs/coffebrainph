@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wiredbrain/enums/enums.dart';
+
+import '../../enums/enums.dart';
 
 class CoffeeSize extends StatelessWidget {
   CoffeeSize({
@@ -22,7 +23,7 @@ class CoffeeSize extends StatelessWidget {
       children: <Widget>[
         if (!lessSpace) ...[
           Text(
-            "Size",
+            'Size',
             style: TextStyle(
               color: Colors.grey.shade700,
             ),

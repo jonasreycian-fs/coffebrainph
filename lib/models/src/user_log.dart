@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:wiredbrain/enums/enums.dart';
+
+import '../../enums/enums.dart';
 
 part 'user_log.g.dart';
+
 @JsonSerializable(explicitToJson: true)
 class UserLog {
   UserLog({
@@ -19,8 +21,7 @@ class UserLog {
   final String? id;
   final String userId;
 
-  factory UserLog.fromJson(Map<String, dynamic> json) =>
-      _$UserLogFromJson(json);
+  factory UserLog.fromJson(Map<String, dynamic> json) => _$UserLogFromJson(json);
   Map<String, dynamic> toJson() => _$UserLogToJson(this);
 
   static DateTime _fromJson(Timestamp timestamp) => timestamp.toDate();

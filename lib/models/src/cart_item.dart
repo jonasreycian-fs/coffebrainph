@@ -1,8 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:wiredbrain/helpers/helpers.dart';
-import 'package:wiredbrain/enums/enums.dart';
 
+import '../../enums/enums.dart';
+import '../../helpers/helpers.dart';
 import 'coffee.dart';
+
 part 'cart_item.g.dart';
 
 @JsonSerializable(explicitToJson: true)

@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wiredbrain/coffee_router.dart';
-import 'package:wiredbrain/enums/enums.dart';
-import 'package:wiredbrain/screens/menu.dart';
-import 'package:wiredbrain/services/services.dart';
-import 'package:wiredbrain/widgets/widgets.dart';
+
+import '../coffee_router.dart';
+import '../enums/enums.dart';
+import '../services/services.dart';
+import '../widgets/widgets.dart';
+import 'menu.dart';
 
 class RegisterScreen extends StatelessWidget {
   static String routeName = 'RegisterScreen';
@@ -28,13 +28,9 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Register"),
+        title: Text('Register'),
         actions: [
-          Image.asset(
-            "assets/logo.png",
-            semanticLabel: 'logo',
-            fit: BoxFit.fitWidth,
-          ),
+          Image.asset('assets/logo.png', semanticLabel: 'logo', fit: BoxFit.fitWidth),
         ],
       ),
       body: SafeArea(
@@ -71,9 +67,7 @@ class RegisterScreen extends StatelessWidget {
   _onSubmitLoginButton(context) async {
     if (_isFormValidated()) {
       ScaffoldMessenger.of(context).showSnackBar(
-        loadingSnackBar(
-          text: " Creating user...",
-        ),
+        loadingSnackBar(text: ' Creating user...'),
       );
 
       final User? user = await _authService.createUserWithEmailAndPassword(

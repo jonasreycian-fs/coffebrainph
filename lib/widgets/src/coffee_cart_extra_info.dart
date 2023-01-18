@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:wiredbrain/models/models.dart';
-import 'package:wiredbrain/widgets/widgets.dart';
+
+import '../../models/models.dart';
+import '../widgets.dart';
 
 class CoffeeCartExtraInfo extends StatelessWidget {
   const CoffeeCartExtraInfo({

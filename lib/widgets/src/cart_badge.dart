@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:wiredbrain/models/models.dart';
-import 'package:wiredbrain/services/services.dart';
+
+import '../../models/models.dart';
+import '../../services/services.dart';
 
 class CartBadge extends StatelessWidget {
   CartBadge({
@@ -28,6 +29,7 @@ class CartBadge extends StatelessWidget {
           if (snapshot.hasError) {
             print(snapshot.error);
             print('Error!');
+            return SizedBox();
           }
 
           if (snapshot.connectionState == ConnectionState.active) {

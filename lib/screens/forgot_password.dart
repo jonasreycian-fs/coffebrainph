@@ -1,11 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wiredbrain/coffee_router.dart';
-import 'package:wiredbrain/constants.dart';
-import 'package:wiredbrain/helpers/helpers.dart';
-import 'package:wiredbrain/screens/home.dart';
-import 'package:wiredbrain/services/services.dart';
-import 'package:wiredbrain/widgets/widgets.dart';
+
+import '../coffee_router.dart';
+import '../constants.dart';
+import '../helpers/helpers.dart';
+import '../services/services.dart';
+import '../widgets/widgets.dart';
+import 'home.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   static String routeName = 'ForgotPasswordScreen';
@@ -30,10 +30,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Forgot Password"),
+        title: Text('Forgot Password'),
         actions: [
           Image.asset(
-            "assets/logo.png",
+            'assets/logo.png',
             semanticLabel: 'logo',
             fit: BoxFit.fitWidth,
           ),
@@ -90,7 +90,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     if (_isFormValidated()) {
       ScaffoldMessenger.of(context).showSnackBar(
         loadingSnackBar(
-          text: " Wait please...",
+          text: ' Wait please...',
         ),
       );
 

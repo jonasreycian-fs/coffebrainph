@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wiredbrain/constants.dart';
+
+import '../../constants.dart';
 
 class TotalAmount extends StatelessWidget {
   const TotalAmount({

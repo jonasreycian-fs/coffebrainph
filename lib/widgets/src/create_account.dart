@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:wiredbrain/coffee_router.dart';
-import 'package:wiredbrain/constants.dart';
-import 'package:wiredbrain/screens/register.dart';
+
+import '../../coffee_router.dart';
+import '../../constants.dart';
+import '../../screens/register.dart';
 
 class CreateAccount extends StatelessWidget {
   const CreateAccount({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class CreateAccount extends StatelessWidget {
             CoffeeRouter.instance.push(RegisterScreen.route());
           },
           child: Text(
-            " Register",
+            ' Register',
             style: TextStyle(
               color: darkBrown,
               fontWeight: FontWeight.w500,

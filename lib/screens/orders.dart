@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:wiredbrain/constants.dart';
-import 'package:wiredbrain/enums/enums.dart';
-import 'package:wiredbrain/models/models.dart';
-import 'package:wiredbrain/services/services.dart';
-import 'package:wiredbrain/widgets/widgets.dart';
+
+import '../constants.dart';
+import '../enums/enums.dart';
+import '../models/models.dart';
+import '../services/services.dart';
+import '../widgets/widgets.dart';
 
 class OrdersScreen extends StatelessWidget {
   static String routeName = 'Orders';
@@ -16,7 +17,9 @@ class OrdersScreen extends StatelessWidget {
     return StreamBuilder<List<Order>>(
       stream: _firestoreService.getUserOrders(_authService.currentUser!.uid),
       builder: (context, AsyncSnapshot<List<Order>> snapshot) {
-        print(snapshot);
+        if (snapshot.hasError) {
+          return NoItems(title: 'No Orders!');
+        }
         if (snapshot.connectionState == ConnectionState.active) {
           if (snapshot.hasData) {
             final orders = snapshot.data!;

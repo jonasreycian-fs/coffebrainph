@@ -1,5 +1,6 @@
-import 'package:wiredbrain/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'screens/splash_screen.dart';
 
 /// Handles everything related to routing and routes.
 ///

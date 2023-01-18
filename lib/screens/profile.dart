@@ -1,13 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:wiredbrain/coffee_router.dart';
-import 'package:wiredbrain/enums/enums.dart';
-import 'package:wiredbrain/screens/home.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:wiredbrain/services/services.dart';
-import 'package:wiredbrain/widgets/widgets.dart';
+
+import '../coffee_router.dart';
+import '../enums/enums.dart';
+import '../services/services.dart';
+import '../widgets/widgets.dart';
+import 'home.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen();
@@ -43,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                 children: <Widget>[
                   SvgPicture.asset(
-                    "assets/coffee_break.svg",
+                    'assets/coffee_break.svg',
                     height: MediaQuery.of(context).size.height / 3,
                     width: MediaQuery.of(context).size.width,
                     semanticsLabel: 'Wired Brain Coffee',
@@ -69,20 +68,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   user.sendEmailVerification();
                 },
               ),
-            // if (_messagingService.userDeviceToken != null)
-            //   CommonButton(
-            //     text: 'Subscribe to new coffee',
-            //     onPressed: () async {
-            //       await _messagingService.subscribeToTopic('Coffees');
-            //     },
-            //   ),
-            // if (_messagingService.userDeviceToken != null)
-            //   CommonButton(
-            //     text: 'Unsubscribe from new coffee',
-            //     onPressed: () async {
-            //       await _messagingService.unsubscribeToTopic('Coffees');
-            //     },
-            //   ),
+            if (_messagingService.userDeviceToken != null)
+              CommonButton(
+                text: 'Subscribe coffee newsletter',
+                onPressed: () async {
+                  await _messagingService.subscribeToTopic('Coffees');
+                },
+              ),
+            if (_messagingService.userDeviceToken != null)
+              CommonButton(
+                text: 'Unsubscribe coffee newsletter',
+                onPressed: () async {
+                  await _messagingService.unsubscribeFromTopic('Coffees');
+                },
+              ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: CommonButton(
@@ -91,6 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     activity: Activity.logout,
                     userId: _authService.currentUser!.uid,
                   );
+                  print(_messagingService.userDeviceToken);
                   await _firestoreService.deleteUserToken(
                     token: _messagingService.userDeviceToken,
                     userId: _authService.currentUser!.uid,

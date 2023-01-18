@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:wiredbrain/coffee_router.dart';
-import 'package:wiredbrain/constants.dart';
-import 'package:wiredbrain/models/models.dart';
-import 'package:wiredbrain/screens/menu_detail.dart';
-import 'package:wiredbrain/services/services.dart';
+
+import '../coffee_router.dart';
+import '../constants.dart';
+import '../models/models.dart';
+import '../services/services.dart';
+import 'menu_detail.dart';
 
 class CoffeeItem extends StatelessWidget {
   CoffeeItem({
@@ -21,6 +22,11 @@ class CoffeeItem extends StatelessWidget {
     return StreamBuilder<Coffee>(
       stream: _firestoreService.getCoffee(coffee.id),
       builder: (context, AsyncSnapshot<Coffee> snapshot) {
+        if (snapshot.hasError) {
+          print(snapshot.error);
+          return SizedBox();
+        }
+
         Coffee newCoffee = coffee;
 
         if (snapshot.hasData) {

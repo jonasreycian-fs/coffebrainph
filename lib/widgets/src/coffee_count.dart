@@ -36,7 +36,7 @@ class _CoffeeCountState extends State<CoffeeCount> {
         ),
         SizedBox(width: 20),
         Text(
-          "$count",
+          '$count',
           style: TextStyle(
             color: Colors.brown.shade800,
             fontSize: 26,

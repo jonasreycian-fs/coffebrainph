@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wiredbrain/constants.dart';
+
+import '../../constants.dart';
 
 class CommonButton extends StatelessWidget {
   const CommonButton({
