@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../coffee_router.dart';
-import '../const.dart';
+import '../constants.dart';
 import '../widgets/button.dart';
 import 'login.dart';
+import 'register.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   static String routeName = 'homeScreen';
   static Route<HomeScreen> route() {
     return MaterialPageRoute<HomeScreen>(
@@ -14,13 +15,6 @@ class HomeScreen extends StatefulWidget {
       builder: (BuildContext context) => HomeScreen(),
     );
   }
-
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  final loginScaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 CommonButton(
                   onPressed: () {
                     CoffeeRouter.instance.push(
-                      LoginScreen.route(loginScaffoldKey),
+                      RegisterScreen.route(),
                     );
                   },
                   text: Strings.register,
@@ -61,8 +55,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(width: 20),
                 CommonButton(
                   onPressed: () {
-                    Navigator.of(context).push(
-                      LoginScreen.route(loginScaffoldKey),
+                    CoffeeRouter.instance.push(
+                      LoginScreen.route(),
                     );
                   },
                   text: Strings.login,

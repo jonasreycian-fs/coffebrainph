@@ -1,30 +1,25 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../coffee_router.dart';
-import '../const.dart';
-import '../data_providers/auth_data_provider.dart';
-import '../data_providers/http_client.dart';
 import '../services/analytics.dart';
+import '../services/auth.dart';
 import '../widgets/button.dart';
-import '../widgets/create_account.dart';
-import '../widgets/login_inputs.dart';
+import '../widgets/social_button.dart';
+import 'login_email.dart';
 import 'menu.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({
-    required this.scaffoldKey,
-  });
-
-  final scaffoldKey;
+  const LoginScreen();
 
   static String routeName = 'loginScreen';
-  static Route<LoginScreen> route(loginScaffoldKey) {
+  static Route<LoginScreen> route() {
     return MaterialPageRoute<LoginScreen>(
       settings: RouteSettings(name: routeName),
-      builder: (BuildContext context) => LoginScreen(
-        scaffoldKey: loginScaffoldKey,
-      ),
+      builder: (BuildContext context) => const LoginScreen(),
     );
   }
 
@@ -33,24 +28,41 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final formKey = GlobalKey<FormState>();
-  final _emailFieldController = TextEditingController();
-  final _passwordFieldController = TextEditingController();
+  TextEditingController _textFieldController = TextEditingController();
+  final AnalyticsService _analyticsService = AnalyticsService.instance;
+  final AuthService _authService = AuthService.instance;
 
-  final AnalyticsService _analyticsService = AnalyticsService();
+  StreamSubscription<User?>? _authChangeSubscription;
+  bool _loading = false;
 
   @override
   void initState() {
     super.initState();
-    _emailFieldController.text = 'me@majidhajian.com';
-    _passwordFieldController.text = 'me@majidhajian.com';
+    _authChangeSubscription = _authService.authStateChanges().listen((user) {
+      if (user != null) {
+        // which provider users is logged
+        user.providerData.forEach((provider) {
+          _analyticsService.logLogin(loginMethod: provider.providerId);
+        });
+        _analyticsService.setUserProperties(
+          userId: user.uid,
+          userRole: 'customer',
+        );
+        CoffeeRouter.instance.pushAndRemoveUntil(MenuScreen.route());
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _authChangeSubscription?.cancel();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      key: widget.scaffoldKey,
       appBar: AppBar(
         title: Text("Login"),
         actions: [
@@ -63,97 +75,105 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32),
-        child: Form(
-          key: formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Center(
-                child: SvgPicture.asset(
-                  "assets/hotbeverage.svg",
-                  height: MediaQuery.of(context).size.height / 3,
-                  width: MediaQuery.of(context).size.width,
-                  semanticsLabel: 'Wired Brain Coffee',
-                  fit: BoxFit.fitWidth,
-                ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Center(
+              child: SvgPicture.asset(
+                "assets/hotbeverage.svg",
+                height: MediaQuery.of(context).size.height / 3,
+                width: MediaQuery.of(context).size.width,
+                semanticsLabel: 'Wired Brain Coffee',
+                fit: BoxFit.fitWidth,
               ),
-              LoginInputs(
-                emailFieldController: _emailFieldController,
-                passwordFieldController: _passwordFieldController,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Text(
-                    "Forgot password?",
-                    style: TextStyle(
-                      color: darkBrown,
-                      fontWeight: FontWeight.w500,
-                    ),
+            ),
+            Flexible(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // SignInButton.phone(onPressed: () {
+                  //   _displayTextInputDialog(context);
+                  // }),
+                  // SizedBox(height: 20),
+                  SignInButton.google(onPressed: () {
+                    _authService.signInWithGoogle();
+                  }),
+                  SizedBox(height: 20),
+                  FutureBuilder<bool>(
+                    future: _authService.isAppleSignInAvailable(),
+                    builder: (context, AsyncSnapshot<bool> snapshot) {
+                      final bool isAvailable = snapshot.data ?? false;
+                      if (isAvailable) {
+                        return SignInButton.apple(onPressed: () {
+                          _authService.signInWithApple();
+                        });
+                      }
+                      return SizedBox();
+                    },
+                  ),
+                  SizedBox(height: 20),
+                  SignInButton.mail(onPressed: () {
+                    CoffeeRouter.instance.push(LoginEmailScreen.route());
+                  }),
+                  SizedBox(height: 20),
+                  Center(child: Text('OR')),
+                  SizedBox(height: 20),
+                  CommonButton(
+                    onPressed: _loading
+                        ? null // disable button
+                        : () async {
+                            setState(() {
+                              _loading = true;
+                            });
+
+                            await _authService.signInAnonymously();
+
+                            setState(() {
+                              _loading = false;
+                            });
+                          },
+                    text: _loading ? 'Please wait, Login...' : 'Continue anonymously',
                   ),
                 ],
               ),
-              CommonButton(
-                onPressed: _onSubmitLoginButton,
-                text: 'login',
-              ),
-              CreateAccount(),
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );
   }
 
-  bool _isFormValidated() {
-    final FormState form = formKey.currentState!;
-    return form.validate();
-  }
-
-  _onSubmitLoginButton() async {
-    if (_isFormValidated()) {
-      widget.scaffoldKey.currentState.showSnackBar(_loadingSnackBar());
-      final BaseAuth auth = AuthDataProvider(http: HttpClient());
-
-      final String email = _emailFieldController.text;
-      final String password = _passwordFieldController.text;
-      final bool loggedIn = await auth.signInWithEmailAndPassword(
-        email,
-        password,
-      );
-
-      widget.scaffoldKey.currentState.hideCurrentSnackBar();
-
-      if (loggedIn) {
-        _analyticsService.logLogin();
-
-        _analyticsService.setUserProperties(
-          userId: email,
-          userRole: 'customer',
-        );
-
-        CoffeeRouter.instance.push(MenuScreen.route());
-      } else {
-        final snackBar = SnackBar(
-          backgroundColor: Colors.red,
-          content: Text('Your username / password is incorrect'),
-        );
-        widget.scaffoldKey.currentState.showSnackBar(snackBar);
-      }
-    }
-  }
-
-  Widget _loadingSnackBar() {
-    return SnackBar(
-      content: Row(
-        children: <Widget>[
-          CircularProgressIndicator(),
-          SizedBox(
-            width: 20,
+  Future<void> _displayTextInputDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Phone Number'),
+          content: TextField(
+            controller: _textFieldController,
+            decoration: InputDecoration(hintText: "Phone number"),
           ),
-          Text(" Signing-In...")
-        ],
-      ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('CANCEL'),
+              onPressed: () {
+                CoffeeRouter.instance.pop();
+              },
+            ),
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                final String phoneNumber = _textFieldController.text;
+                if (_textFieldController.text.isNotEmpty) {
+                  _authService.signInWithPhoneNumber(phoneNumber);
+                }
+                CoffeeRouter.instance.pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

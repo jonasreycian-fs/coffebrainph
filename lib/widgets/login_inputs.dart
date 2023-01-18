@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../const.dart';
+import '../constants.dart';
 import '../helpers/validators.dart';
 
 class LoginInputs extends StatelessWidget {

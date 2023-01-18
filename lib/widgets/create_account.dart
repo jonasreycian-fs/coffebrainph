@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:wiredbrain/screens/register.dart';
 
-import '../const.dart';
+import '../coffee_router.dart';
+import '../constants.dart';
 
 class CreateAccount extends StatelessWidget {
   const CreateAccount({Key? key}) : super(key: key);
@@ -14,11 +16,16 @@ class CreateAccount extends StatelessWidget {
           "Don\'t have an account?",
           style: TextStyle(color: Colors.grey.shade600),
         ),
-        Text(
-          " Register",
-          style: TextStyle(
-            color: darkBrown,
-            fontWeight: FontWeight.w500,
+        TextButton(
+          onPressed: () {
+            CoffeeRouter.instance.push(RegisterScreen.route());
+          },
+          child: Text(
+            " Register",
+            style: TextStyle(
+              color: darkBrown,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
       ],

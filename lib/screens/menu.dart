@@ -1,11 +1,11 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 
-import '../const.dart';
-import '../screens/logout.dart';
+import '../constants.dart';
 import '../screens/support.dart';
 import '../services/analytics.dart';
 import 'menu_list.dart';
+import 'profile.dart';
 import 'shops.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -28,7 +28,7 @@ class _MenuScreenState extends State<MenuScreen> {
     MenuList(coffees: coffees),
     ShopsScreen(),
     SupportScreen(),
-    LogoutScreen(),
+    ProfileScreen(),
   ];
 
   final FirebaseAnalyticsObserver observer = AnalyticsService.observer;
@@ -62,16 +62,16 @@ class _MenuScreenState extends State<MenuScreen> {
         backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed,
         unselectedItemColor: Colors.brown.shade300,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
+        items: <BottomNavigationBarItem>[
+          const BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: "Menu",
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.location_on),
             label: "Shops",
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.local_drink),
             label: "Support",
           ),

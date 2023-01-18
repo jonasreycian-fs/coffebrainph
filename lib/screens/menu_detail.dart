@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../const.dart';
+import '../constants.dart';
 import '../models/coffee.dart';
 import '../widgets/button.dart';
 import '../widgets/coffee_additions.dart';
