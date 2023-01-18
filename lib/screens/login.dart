@@ -3,23 +3,14 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-<<<<<<< HEAD
 
 import '../coffee_router.dart';
-import '../services/analytics.dart';
-import '../services/auth.dart';
-import '../widgets/button.dart';
-import '../widgets/social_button.dart';
+import '../enums/enums.dart';
+import '../services/services.dart';
+import '../widgets/src/button.dart';
+import '../widgets/src/social_button.dart';
 import 'login_email.dart';
 import 'menu.dart';
-=======
-import 'package:wiredbrain/coffee_router.dart';
-import 'package:wiredbrain/enums/enums.dart';
-import 'package:wiredbrain/screens/login_email.dart';
-import 'package:wiredbrain/screens/menu.dart';
-import 'package:wiredbrain/services/services.dart';
-import 'package:wiredbrain/widgets/widgets.dart';
->>>>>>> origin/module04-database-management
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen();

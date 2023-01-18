@@ -1,11 +1,7 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
-<<<<<<< HEAD:lib/services/analytics.dart
 import 'package:firebase_core/firebase_core.dart';
-=======
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:firebase_analytics/observer.dart';
-import 'package:wiredbrain/enums/enums.dart';
->>>>>>> origin/module04-database-management:lib/services/src/analytics.dart
+
+import '../../enums/enums.dart';
 
 class AnalyticsService {
   final FirebaseAnalytics _analytics = FirebaseAnalytics.instanceFor(app: Firebase.app());
@@ -29,12 +25,13 @@ class AnalyticsService {
     required String itemCategory,
     required int quantity,
   }) async {
-    return _analytics.logAddToCart(
+    final items = AnalyticsEventItem(
       itemId: itemId,
       itemName: itemName,
       itemCategory: itemCategory,
       quantity: quantity,
     );
+    return _analytics.logAddToCart(items: [items]);
   }
 
   Future<void> logPlaceOrder({
@@ -61,8 +58,7 @@ class AnalyticsService {
     await _analytics.setUserId(id: userId);
     await _analytics.setUserProperty(
       name: 'user_role', // custom userProperty
-      value:
-          userRoles.contains(UserRole.customer) ? "customer" : 'adminOrUnknown',
+      value: userRoles.contains(UserRole.customer) ? 'customer' : 'adminOrUnknown',
     );
   }
 

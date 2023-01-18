@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../coffee_router.dart';
-import '../services/analytics.dart';
-import '../widgets/button.dart';
+import '../services/services.dart';
+import '../widgets/src/button.dart';
 import 'home.dart';
 
 class LogoutScreen extends StatefulWidget {

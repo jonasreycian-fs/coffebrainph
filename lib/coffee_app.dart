@@ -1,16 +1,11 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-=======
-import 'package:wiredbrain/services/services.dart';
->>>>>>> origin/module04-database-management
 
 import 'coffee_router.dart';
 import 'get_theme.dart';
 import 'screens/splash_screen.dart';
-import 'services/analytics.dart';
+import 'services/services.dart';
 
 class CoffeeApp extends StatelessWidget {
   final FirebaseAnalyticsObserver observer = AnalyticsService.observer;

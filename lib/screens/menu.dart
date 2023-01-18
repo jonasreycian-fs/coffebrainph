@@ -1,21 +1,12 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
+import 'package:wiredbrain/widgets/src/cart_badge.dart';
 
-import '../constants.dart';
-import '../screens/support.dart';
-import '../services/analytics.dart';
+import '../services/services.dart';
+import 'cart.dart';
 import 'menu_list.dart';
+import 'orders.dart';
 import 'profile.dart';
-import 'shops.dart';
-=======
-import 'package:wiredbrain/screens/cart.dart';
-import 'package:wiredbrain/screens/menu_list.dart';
-import 'package:wiredbrain/screens/orders.dart';
-import 'package:wiredbrain/screens/profile.dart';
-import 'package:wiredbrain/services/services.dart';
-import 'package:wiredbrain/widgets/widgets.dart';
->>>>>>> origin/module04-database-management
 
 class MenuScreen extends StatefulWidget {
   static String routeName = 'menuScreen';
@@ -41,6 +32,15 @@ class _MenuScreenState extends State<MenuScreen> {
   ];
 
   final FirebaseAnalyticsObserver observer = AnalyticsService.observer;
+  final AuthService _authService = AuthService.instance;
+  final FirestoreService _firestoreService = FirestoreService.instance;
+  final MessagingService _messagingService = MessagingService.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    setupMessaging();
+  }
 
   void _sendCurrentTabToAnalytics() {
     final String screeName = '${MenuScreen.routeName}/tab$_selectedIndex';
@@ -106,6 +106,14 @@ class _MenuScreenState extends State<MenuScreen> {
         selectedItemColor: Colors.brown.shade800,
         onTap: _onItemTapped,
       ),
+    );
+  }
+
+  Future<void> setupMessaging() async {
+    await _messagingService.initialize();
+    await _firestoreService.registerUserToken(
+      token: _messagingService.userDeviceToken,
+      userId: _authService.currentUser!.uid,
     );
   }
 }

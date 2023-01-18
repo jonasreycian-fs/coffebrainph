@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 
+import '../coffee_router.dart';
 import '../constants.dart';
-import '../models/coffee.dart';
-import '../widgets/button.dart';
-import '../widgets/coffee_additions.dart';
-import '../widgets/coffee_count.dart';
-import '../widgets/coffee_size.dart';
-import '../widgets/coffee_sugar.dart';
-=======
-import 'package:wiredbrain/coffee_router.dart';
-import 'package:wiredbrain/constants.dart';
-import 'package:wiredbrain/helpers/helpers.dart';
-import 'package:wiredbrain/enums/enums.dart';
-import 'package:wiredbrain/models/models.dart';
-import 'package:wiredbrain/services/services.dart';
-import 'package:wiredbrain/widgets/widgets.dart';
->>>>>>> origin/module04-database-management
+import '../enums/enums.dart';
+import '../helpers/src/cart_item_total.dart';
+import '../models/models.dart';
+import '../services/services.dart';
+import '../widgets/src/button.dart';
+import '../widgets/src/coffee_additions.dart';
+import '../widgets/src/coffee_count.dart';
+import '../widgets/src/coffee_size.dart';
+import '../widgets/src/coffee_sugar.dart';
+import '../widgets/src/loading_snack_bar.dart';
+import '../widgets/src/total_amount.dart';
 
 class MenuDetails extends StatefulWidget {
   const MenuDetails({
@@ -126,7 +122,7 @@ class _MenuDetailsState extends State<MenuDetails> {
                           onPressed: () async {
                             ScaffoldMessenger.of(context).showSnackBar(
                               loadingSnackBar(
-                                text: "Adding to Cart...",
+                                text: 'Adding to Cart...',
                               ),
                             );
 
@@ -155,8 +151,7 @@ class _MenuDetailsState extends State<MenuDetails> {
                               content: Text('Added to cart!'),
                             );
 
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
                             CoffeeRouter.instance.pop();
                           },
