@@ -1,9 +1,9 @@
-import 'package:wiredbrain/coffee_router.dart';
-import 'package:wiredbrain/screens/home.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:wiredbrain/widgets/button.dart';
+
+import '../coffee_router.dart';
+import '../widgets/button.dart';
+import 'home.dart';
 
 class LogoutScreen extends StatefulWidget {
   static String routeName = 'LogoutScreen';
@@ -28,7 +28,7 @@ class _LogoutScreenState extends State<LogoutScreen> {
           child: Column(
             children: <Widget>[
               SvgPicture.asset(
-                "assets/coffee_break.svg",
+                'assets/coffee_break.svg',
                 height: MediaQuery.of(context).size.height / 3,
                 width: MediaQuery.of(context).size.width,
                 semanticsLabel: 'Wired Brain Coffee',

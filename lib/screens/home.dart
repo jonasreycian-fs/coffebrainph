@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:wiredbrain/widgets/button.dart';
 
 import '../coffee_router.dart';
+import '../const.dart';
+import '../widgets/button.dart';
 import 'login.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -28,19 +29,19 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Image.asset(
-              "assets/logo.png",
+              Strings.logoAsset,
               height: 150,
               width: 150,
             ),
             SvgPicture.asset(
-              "assets/hangout.svg",
+              Strings.hangoutAsset,
               height: MediaQuery.of(context).size.height / 3,
               width: MediaQuery.of(context).size.width,
-              semanticsLabel: 'Wired Brain Coffee',
+              semanticsLabel: Strings.wbc,
               fit: BoxFit.fitWidth,
             ),
             Text(
-              "Get the best coffee!",
+              Strings.theBestCoffee,
               style: Theme.of(context).textTheme.headline2,
               textAlign: TextAlign.center,
             ),
@@ -53,19 +54,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       LoginScreen.route(loginScaffoldKey),
                     );
                   },
-                  text: 'Register',
+                  text: Strings.register,
                   highlighColor: true,
                 ),
-                SizedBox(
-                  width: 20,
-                ),
+                SizedBox(width: 20),
                 CommonButton(
                   onPressed: () {
                     Navigator.of(context).push(
                       LoginScreen.route(loginScaffoldKey),
                     );
                   },
-                  text: 'Log In',
+                  text: Strings.login,
                 ),
               ],
             ),

@@ -22,8 +22,7 @@ class _CoffeeCountState extends State<CoffeeCount> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        OutlineButton(
-          borderSide: BorderSide(color: Colors.grey.shade600),
+        OutlinedButton(
           onPressed: () {
             if (count > 1) {
               setState(() {
@@ -33,12 +32,7 @@ class _CoffeeCountState extends State<CoffeeCount> {
             widget.notifyValue!(count);
           },
           child: Icon(Icons.remove),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30),
-              bottomLeft: Radius.circular(30),
-            ),
-          ),
+          style: _style,
         ),
         SizedBox(width: 20),
         Text(
@@ -49,8 +43,7 @@ class _CoffeeCountState extends State<CoffeeCount> {
           ),
         ),
         SizedBox(width: 20),
-        OutlineButton(
-          padding: EdgeInsets.all(0),
+        OutlinedButton(
           onPressed: () {
             setState(() {
               count = count + 1;
@@ -58,17 +51,20 @@ class _CoffeeCountState extends State<CoffeeCount> {
             widget.notifyValue!(count);
           },
           child: Icon(Icons.add),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(30),
-              topRight: Radius.circular(30),
-            ),
-          ),
-          borderSide: BorderSide(
-            color: Colors.grey.shade600,
-          ),
+          style: _style,
         ),
       ],
     );
   }
+
+  ButtonStyle get _style => OutlinedButton.styleFrom(
+        padding: EdgeInsets.all(0),
+        shadowColor: Colors.grey.shade600,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30),
+            bottomLeft: Radius.circular(30),
+          ),
+        ),
+      );
 }

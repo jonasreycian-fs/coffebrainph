@@ -3,5 +3,6 @@
   "search.exclude": {
     "**/.fvm": true
   },
-  "dart.flutterSdkPath": "/Users/majid/fvm/versions/stable"
+  "dart.flutterSdkPath": "/Users/majid/fvm/versions/stable",
+  "java.configuration.updateBuildConfiguration": "interactive"
 }

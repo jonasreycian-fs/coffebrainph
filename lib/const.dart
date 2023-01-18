@@ -10,34 +10,43 @@ final Color brown = Color(0xFF9C5700);
 final Color facebookColor = Color(0xFF4867AA);
 
 final List<Coffee> coffees = [
-  Coffee(coffeeIcon: FontAwesomeIcons.coffee, name: "Espresso ", price: 8),
-  Coffee(coffeeIcon: FontAwesomeIcons.mugHot, name: "Cappuccino", price: 10),
-  Coffee(coffeeIcon: FontAwesomeIcons.cocktail, name: "Mocha", price: 12),
-  Coffee(coffeeIcon: FontAwesomeIcons.beer, name: "Americano", price: 7),
+  Coffee(coffeeIcon: FontAwesomeIcons.mugSaucer, name: 'Espresso ', price: 8),
+  Coffee(coffeeIcon: FontAwesomeIcons.mugHot, name: 'Cappuccino', price: 10),
+  Coffee(coffeeIcon: FontAwesomeIcons.cocktail, name: 'Mocha', price: 12),
+  Coffee(coffeeIcon: FontAwesomeIcons.beer, name: 'Americano', price: 7),
   Coffee(
     coffeeIcon: FontAwesomeIcons.cocktail,
-    name: "Italian Macchiato",
+    name: 'Italian Macchiato',
     price: 5,
   ),
-  Coffee(coffeeIcon: FontAwesomeIcons.coffee, name: "Flat White", price: 3),
+  Coffee(coffeeIcon: FontAwesomeIcons.coffee, name: 'Flat White', price: 3),
   Coffee(
     coffeeIcon: FontAwesomeIcons.mugHot,
-    name: "American Affogato",
+    name: 'American Affogato',
     price: 11,
   ),
-  Coffee(coffeeIcon: FontAwesomeIcons.coffee, name: "Long Black", price: 4),
-  Coffee(coffeeIcon: FontAwesomeIcons.mugHot, name: "Latte", price: 12),
+  Coffee(coffeeIcon: FontAwesomeIcons.coffee, name: 'Long Black', price: 4),
+  Coffee(coffeeIcon: FontAwesomeIcons.mugHot, name: 'Latte', price: 12),
   Coffee(
     coffeeIcon: FontAwesomeIcons.cocktail,
-    name: "American Espresso",
+    name: 'American Espresso',
     price: 9,
   ),
-  Coffee(coffeeIcon: FontAwesomeIcons.beer, name: "CAFÈ AU LAIT.", price: 10),
-  Coffee(coffeeIcon: FontAwesomeIcons.coffee, name: "AFFÈ MOCHA.", price: 12),
-  Coffee(coffeeIcon: FontAwesomeIcons.beer, name: "Americano", price: 7),
+  Coffee(coffeeIcon: FontAwesomeIcons.beer, name: 'CAFÈ AU LAIT.', price: 10),
+  Coffee(coffeeIcon: FontAwesomeIcons.coffee, name: 'AFFÈ MOCHA.', price: 12),
+  Coffee(coffeeIcon: FontAwesomeIcons.beer, name: 'Americano', price: 7),
   Coffee(
     coffeeIcon: FontAwesomeIcons.cocktail,
-    name: "Double Exspersso",
+    name: 'Double Exspersso',
     price: 5,
   ),
 ];
+
+class Strings {
+  static String get logoAsset => 'assets/logo.png';
+  static String get hangoutAsset => 'assets/hangout.svg';
+  static String get theBestCoffee => 'Get the best coffee!';
+  static String get register => 'Register';
+  static String get login => 'Login';
+  static String get wbc => 'Wired Brain Coffee';
+}
