@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:wiredbrain/widgets/button.dart';
+
+import '../const.dart';
+import '../models/coffee.dart';
+import '../widgets/button.dart';
 import '../widgets/coffee_additions.dart';
 import '../widgets/coffee_count.dart';
 import '../widgets/coffee_size.dart';
 import '../widgets/coffee_sugar.dart';
-import '../models/coffee.dart';
-import '../const.dart';
 
 class MenuDetails extends StatefulWidget {
   const MenuDetails({

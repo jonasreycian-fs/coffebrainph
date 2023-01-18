@@ -2,23 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../coffee_router.dart';
+import '../services/analytics.dart';
 import '../widgets/button.dart';
 import 'home.dart';
 
 class LogoutScreen extends StatefulWidget {
-  static String routeName = 'LogoutScreen';
-  static Route<LogoutScreen> route() {
-    return MaterialPageRoute<LogoutScreen>(
-      settings: RouteSettings(name: routeName),
-      builder: (BuildContext context) => LogoutScreen(),
-    );
-  }
+  const LogoutScreen();
+
+  static String routeName = 'Logout';
 
   @override
   _LogoutScreenState createState() => _LogoutScreenState();
 }
 
 class _LogoutScreenState extends State<LogoutScreen> {
+  final AnalyticsService _analyticsService = AnalyticsService();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -41,6 +40,7 @@ class _LogoutScreenState extends State<LogoutScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: CommonButton(
             onPressed: () {
+              _analyticsService.logLogoutPressed();
               CoffeeRouter.instance.pushAndRemoveUntil(HomeScreen.route());
             },
             text: 'Logout',
