@@ -17,16 +17,19 @@ dependencies:
   font_awesome_flutter: ^10.3.0
   google_fonts: ^3.0.1
   http: ^0.13.0
-  logging: ^1.1.0
   firebase_core: ^2.4.1
   firebase_analytics: ^10.1.0
   firebase_auth: ^4.2.5
   google_sign_in: "^5.0.1"
   sign_in_with_apple: ^4.3.0
   crypto: "^3.0.0"
+  cloud_firestore: ^4.3.1
+  json_annotation: ^4.0.1
 
 dev_dependencies:
   flutter_launcher_icons: ^0.11.0
+  json_serializable: ^6.5.4
+  build_runner:
   flutter_test:
     sdk: flutter
 

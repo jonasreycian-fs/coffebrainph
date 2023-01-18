@@ -1,5 +1,11 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
+<<<<<<< HEAD:lib/services/analytics.dart
 import 'package:firebase_core/firebase_core.dart';
+=======
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:firebase_analytics/observer.dart';
+import 'package:wiredbrain/enums/enums.dart';
+>>>>>>> origin/module04-database-management:lib/services/src/analytics.dart
 
 class AnalyticsService {
   final FirebaseAnalytics _analytics = FirebaseAnalytics.instanceFor(app: Firebase.app());
@@ -17,14 +23,46 @@ class AnalyticsService {
     return _analytics.logLogin(loginMethod: loginMethod);
   }
 
+  Future<void> logAddToCart({
+    required String itemId,
+    required String itemName,
+    required String itemCategory,
+    required int quantity,
+  }) async {
+    return _analytics.logAddToCart(
+      itemId: itemId,
+      itemName: itemName,
+      itemCategory: itemCategory,
+      quantity: quantity,
+    );
+  }
+
+  Future<void> logPlaceOrder({
+    required String orderId,
+    required num total,
+    required List<String?> coffees,
+    required int quantity,
+  }) async {
+    return _analytics.logEvent(
+      name: 'place_order',
+      parameters: {
+        'quantity': quantity,
+        'total': total,
+        'coffees': coffees.toString(),
+        'orderId': orderId,
+      },
+    );
+  }
+
   Future<void> setUserProperties({
     required String userId,
-    required String userRole,
+    required List<UserRole> userRoles,
   }) async {
     await _analytics.setUserId(id: userId);
     await _analytics.setUserProperty(
       name: 'user_role', // custom userProperty
-      value: userRole,
+      value:
+          userRoles.contains(UserRole.customer) ? "customer" : 'adminOrUnknown',
     );
   }
 

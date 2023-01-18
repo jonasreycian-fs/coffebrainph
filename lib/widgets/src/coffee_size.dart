@@ -1,67 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:wiredbrain/enums/enums.dart';
 
-enum CoffeeCupSize { small, medium, large }
-
-class CoffeeSize extends StatefulWidget {
+class CoffeeSize extends StatelessWidget {
   CoffeeSize({
     Key? key,
-    this.icon,
+    required this.icon,
+    required this.size,
+    this.lessSpace = false,
+    required this.onPressed,
   }) : super(key: key);
 
-  final IconData? icon;
-
-  @override
-  _CoffeeSizeState createState() => _CoffeeSizeState();
-}
-
-class _CoffeeSizeState extends State<CoffeeSize> {
-  CoffeeCupSize size = CoffeeCupSize.medium;
+  final IconData icon;
+  final CoffeeCupSize size;
+  final bool lessSpace;
+  final Function(CoffeeCupSize) onPressed;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
-        Text(
-          "Size",
-          style: TextStyle(
-            color: Colors.grey.shade700,
+        if (!lessSpace) ...[
+          Text(
+            "Size",
+            style: TextStyle(
+              color: Colors.grey.shade700,
+            ),
           ),
-        ),
-        SizedBox(width: 50),
+          SizedBox(width: 50),
+        ],
         IconButton(
           icon: Icon(
-            widget.icon,
+            icon,
             color: getColor(size == CoffeeCupSize.small),
+            size: CoffeeCupSize.small.iconSize,
           ),
           onPressed: () {
-            setState(() {
-              size = CoffeeCupSize.small;
-            });
+            onPressed(CoffeeCupSize.small);
           },
         ),
         IconButton(
           icon: Icon(
-            widget.icon,
+            icon,
             color: getColor(size == CoffeeCupSize.medium),
-            size: 30,
+            size: CoffeeCupSize.medium.iconSize,
           ),
           onPressed: () {
-            setState(() {
-              size = CoffeeCupSize.medium;
-            });
+            onPressed(CoffeeCupSize.medium);
           },
         ),
         IconButton(
           icon: Icon(
-            widget.icon,
+            icon,
             color: getColor(size == CoffeeCupSize.large),
-            size: 36,
+            size: CoffeeCupSize.large.iconSize,
           ),
           onPressed: () {
-            setState(() {
-              size = CoffeeCupSize.large;
-            });
+            onPressed(CoffeeCupSize.large);
           },
         ),
       ],

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+<<<<<<< HEAD
 
 import '../coffee_router.dart';
 import '../services/analytics.dart';
@@ -11,6 +12,14 @@ import '../widgets/button.dart';
 import '../widgets/social_button.dart';
 import 'login_email.dart';
 import 'menu.dart';
+=======
+import 'package:wiredbrain/coffee_router.dart';
+import 'package:wiredbrain/enums/enums.dart';
+import 'package:wiredbrain/screens/login_email.dart';
+import 'package:wiredbrain/screens/menu.dart';
+import 'package:wiredbrain/services/services.dart';
+import 'package:wiredbrain/widgets/widgets.dart';
+>>>>>>> origin/module04-database-management
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen();
@@ -31,6 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController _textFieldController = TextEditingController();
   final AnalyticsService _analyticsService = AnalyticsService.instance;
   final AuthService _authService = AuthService.instance;
+  final FirestoreService _firestoreService = FirestoreService.instance;
 
   StreamSubscription<User?>? _authChangeSubscription;
   bool _loading = false;
@@ -38,19 +48,29 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    _authChangeSubscription = _authService.authStateChanges().listen((user) {
-      if (user != null) {
-        // which provider users is logged
-        user.providerData.forEach((provider) {
-          _analyticsService.logLogin(loginMethod: provider.providerId);
-        });
-        _analyticsService.setUserProperties(
-          userId: user.uid,
-          userRole: 'customer',
-        );
-        CoffeeRouter.instance.pushAndRemoveUntil(MenuScreen.route());
-      }
-    });
+    _authChangeSubscription = _authService.authStateChanges().listen(
+      (User? user) async {
+        if (user != null) {
+          // which provider users is logged
+          user.providerData.forEach((provider) {
+            _analyticsService.logLogin(loginMethod: provider.providerId);
+          });
+          _analyticsService.setUserProperties(
+            userId: user.uid,
+            userRoles: [UserRole.customer],
+          );
+
+          _firestoreService.setUserLastLoginTimestamp(user.uid);
+
+          await _firestoreService.addLog(
+            activity: Activity.login,
+            userId: user.uid,
+          );
+
+          CoffeeRouter.instance.pushAndRemoveUntil(MenuScreen.route());
+        }
+      },
+    );
   }
 
   @override

@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+<<<<<<< HEAD
 
 import '../coffee_router.dart';
 import '../constants.dart';
 import '../widgets/button.dart';
 import 'login.dart';
 import 'register.dart';
+=======
+import 'package:wiredbrain/coffee_router.dart';
+import 'package:wiredbrain/screens/login.dart';
+import 'package:wiredbrain/screens/register.dart';
+import 'package:wiredbrain/widgets/widgets.dart';
+>>>>>>> origin/module04-database-management
 
 class HomeScreen extends StatelessWidget {
   static String routeName = 'homeScreen';
